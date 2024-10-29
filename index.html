@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn with the game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chokokutai&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos CSS */
+        #quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 50px;
+            width: 0;
+            height: 0;
+            border-left: 300px solid transparent;
+            border-right: 300px solid transparent;
+            border-bottom: 120px solid darkgreen;
+            opacity: 0.8;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightblue;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 1s;
+        }
+
+        #in1 {
+            padding: 9px 60px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        #knight {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            width: 50px;
+            height: 140px;
+            background-color: purple;
+            transition: left 2s;
+            z-index: 2;
+        }
+
+        #princess {
+            position: absolute;
+            bottom: 50px;
+            left: 1200px;
+            width: 50px;
+            height: 130px;
+            background-color: rgb(255, 0, 221);
+            z-index: 2;
+        }
+
+        #crown2 {
+            position: absolute;
+            bottom: 170px;
+            left: 1200px;
+            width: 50px;
+            height: 30px;
+            background-color: rgb(251, 255, 0);
+
+            z-index: 2;
+        }
+
+        #princesseye {
+            position: absolute;
+            bottom: 154px;
+            right: 133px;
+            width: 14px;
+            height: 10px;
+            background-color: rgb(0, 0, 0);
+            z-index: 3;
+        }
+
+        #crown {
+            position: absolute;
+            bottom: 190px;
+            left: 50px;
+            width: 50px;
+            height: 30px;
+            background-color: rgb(119, 119, 119);
+            transition: left 2s;
+            z-index: 2;
+        }
+
+        #knighteye {
+            position: absolute;
+            bottom: 160px;
+            left: 80px;
+            width: 10px;
+            height: 10px;
+            transition: left 2s;
+            background-color: rgb(0, 0, 0);
+            z-index: 2;
+
+        }
+
+        #enemy {
+            position: absolute;
+            bottom: 50px;
+            left: 500px;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            z-index: 2;
+        }
+
+        #enemyeye {
+            position: absolute;
+            bottom: 97px;
+            left: 504px;
+            width: 10px;
+            /* Ancho 0 */
+            height: 10px;
+            /* Alto 0 */
+            border-left: 10px solid transparent;
+            /* Parte izquierda del triángulo */
+            border-right: 10px solid transparent;
+            /* Parte derecha del triángulo */
+            border-top: 20px solid rgb(0, 0, 0);
+            /* Parte superior (color del triángulo) */
+            z-index: 2;
+        }
+
+        #enemyeye2 {
+            position: absolute;
+            bottom: 120px;
+            left: 706px;
+            width: 12px;
+            /* Ancho 0 */
+            height: 0;
+            /* Alto 0 */
+            border-left: 10px solid transparent;
+            /* Parte izquierda del triángulo */
+            border-right: 10px solid transparent;
+            /* Parte derecha del triángulo */
+            border-top: 20px solid rgb(0, 0, 0);
+            /* Parte superior (color del triángulo) */
+            z-index: 3;
+        }
+
+        #enemyeye3 {
+            position: absolute;
+            bottom: 140px;
+            left: 906px;
+            width: 14px;
+            /* Ancho 0 */
+            height: 0;
+            /* Alto 0 */
+            border-left: 10px solid transparent;
+            /* Parte izquierda del triángulo */
+            border-right: 10px solid transparent;
+            /* Parte derecha del triángulo */
+            border-top: 20px solid rgb(0, 0, 0);
+            /* Parte superior (color del triángulo) */
+            z-index: 3;
+        }
+
+        #enemy2 {
+            position: absolute;
+            bottom: 50px;
+            left: 700px;
+            width: 130px;
+            height: 130px;
+            background-color: yellow;
+            z-index: 2;
+        }
+
+        #enemy3 {
+            position: absolute;
+            bottom: 50px;
+            left: 900px;
+            width: 150px;
+            height: 150px;
+            background-color: blue;
+            z-index: 2;
+        }
+
+
+        #grass {
+            position: absolute;
+            bottom: 0;
+            width: 1000%;
+            height: 50px;
+            background-color: green;
+            z-index: 1;
+        }
+
+        .cloud {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        #sun {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 80px;
+            height: 80px;
+            background-color: yellow;
+            border-radius: 50%;
+            z-index: 2;
+            transition: left 3s;
+        }
+
+        #moon {
+            position: absolute;
+            top: 50px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+
+        #grow-button {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            position: absolute;
+            padding: 15px 30px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 4;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #grow-button:hover {
+            background-color: #1976D2;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 900px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 20px;
+        }
+
+        #titulo {
+            color: rgb(75, 9, 114);
+            text-align: center;
+            font-family: "Chokokutai", system-ui;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 110px;
+            margin-top: -300px;
+            z-index: 3;
+        }
+
+        #fb {
+            background-color: #f44336;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sun"></div>
+    <div id="titulo">!Rescue HER¡</div>
+    <div id="princesseye"></div>
+    <div id="crown2"></div>
+    <div id="knight"></div>
+    <div id="knighteye"></div>
+    <div id="princess"></div>
+    <div id="crown"></div>
+    <div id="enemy"></div>
+    <div id="enemyeye"></div>
+    <div id="enemyeye2"></div>
+    <div id="enemyeye3"></div>
+    <div id="enemy2"></div>
+    <div id="enemy3"></div>
+    <div id="grass"></div>
+
+    <button id="grow-button">START</button>
+
+    <!-- Montañas -->
+    <div class="mountain" style="left: 100px;"></div>
+    <div class="mountain" style="left: 400px;"></div>
+    <div class="mountain" style="left: 600px;"></div>
+    <div class="mountain" style="left: 800px;"></div>
+    <div class="mountain" style="left: 1000px;"></div>
+    <div class="mountain" style="left: 1200px;"></div>
+    <div class="mountain" style="left: 1400px;"></div>
+    <div class="mountain" style="left: 1600px;"></div>
+    <div class="mountain" style="left: 1800px;"></div>
+    <div class="mountain" style="left: 2000px;"></div>
+    <div class="mountain" style="left: 2200px;"></div>
+    <div class="mountain" style="left: 2400px;"></div>
+    <div class="mountain" style="left: 2600px;"></div>
+    <div class="mountain" style="left: 2800px;"></div>
+    <div class="mountain" style="left: 3000px;"></div>
+    <div class="mountain" style="left: 3200px;"></div>
+    <div class="mountain" style="left: 3400px;"></div>
+    <div class="mountain" style="left: 3600px;"></div>
+    <div class="mountain" style="left: 3800px;"></div>
+    <div class="mountain" style="left: 4000px;"></div>
+    <div class="mountain" style="left: 4200px;"></div>
+    <div class="mountain" style="left: 4400px;"></div>
+    <div class="mountain" style="left: 4600px;"></div>
+    <div class="mountain" style="left: 4800px;"></div>
+    <div class="mountain" style="left: 5000px;"></div>
+
+    <!-- Modal -->
+    <div id="modal">
+        <div id="modal-content">
+            <h2>Instructions</h2>
+            <p>You're a knight that has to defeat enemies and must reach the princess by solving grammar problems.
+                Register your username to start playing.</p><br>
+            <input id="in1" type="text" required placeholder="Type your username"><br><br>
+            <input id="fb" type="button" value="Submit">
+        </div>
+    </div>
+
+    <script>
+        function createClouds() {
+            const cloudCount = 20;
+            for (let i = 0; i < cloudCount; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.width = Math.random() * 100 + 50 + 'px';
+                cloud.style.height = Math.random() * 60 + 30 + 'px';
+                cloud.style.top = Math.random() * 110 + 'px';
+                cloud.style.left = Math.random() * window.innerWidth + 'px';
+                document.body.appendChild(cloud);
+                animateCloud(cloud);
+            }
+        }
+
+        function animateCloud(cloud) {
+            let position = parseInt(cloud.style.left);
+            const moveCloud = () => {
+                position += 0.5;
+                cloud.style.left = position + 'px';
+                if (position > window.innerWidth) {
+                    position = -100;
+                }
+                requestAnimationFrame(moveCloud);
+            };
+            moveCloud();
+        }
+
+        createClouds();
+
+        function animateSun() {
+            let sun = document.getElementById('sun');
+            let position = 30;
+            const moveSun = () => {
+                position += 0.5;
+                sun.style.left = position + 'px';
+                if (position > window.innerWidth) {
+                    position = -80;
+                    document.body.style.backgroundColor = "darkblue";
+                    moon.style.opacity = '1';
+                }
+                requestAnimationFrame(moveSun);
+            };
+            moveSun();
+        }
+
+        animateSun();
+
+        const colors = ["lightblue", "lightcyan", "lightpink", "lightorange", "lightred"];
+        let currentColorIndex = 0;
+
+        setInterval(() => {
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            document.body.style.backgroundColor = colors[currentColorIndex];
+        }, 10000);
+
+
+
+        document.getElementById('grow-button').onclick = function () {
+            document.getElementById('modal').style.display = 'flex';
+        };
+
+        document.getElementById('fb').onclick = function () {
+            const username = document.getElementById('in1').value;
+            if (username) {
+                const modalContent = document.getElementById('modal-content');
+                modalContent.innerHTML = `<h2>Welcome, ${username}!</h2> <h3>Here you got some rules</h3>
+                <p>Comparatives of superiority are used to compare two items, indicating that one has a quality to a greater degree than the other.
+
+Rules:
+
+<p>For one-syllable adjectives, add <mark>"-er"</mark> at the end.</p>
+<p>tall → <u>taller</u></p>
+<p>For two-syllable adjectives ending in <mark>"-y,"</mark> change the <mark>"y"</mark> to <mark>"i"</mark> and add "-er" </p>
+<p>happy → <u>happier</u></p>
+<p>For adjectives of two or more syllables, use <mark>"more"</mark> before the adjective </p>
+<p>beautiful → <u>more beautiful</u></p>
+<h3>Example:</h3>
+<p>"John is taller than Mike."</p>
+
+                      <a href="nivel1.html">LEVEL I</a>
+                `;
+                document.getElementById('in1').style.display = 'none'; // Oculta el campo de texto
+                document.getElementById('fb').style.display = 'none'; // Oculta el botón de enviar
+            }
+        };
+    </script>
+
+</body>
+
+</html>

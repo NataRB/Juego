@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn with the game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightblue;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 1s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #knight {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            width: 50px;
+            height: 140px;
+            background-color: purple;
+            transition: left 2s;
+            z-index: 2;
+        }
+
+        #princess {
+            position: absolute;
+            bottom: 50px;
+            left: 1200px;
+            width: 50px;
+            height: 130px;
+            background-color: rgb(255, 0, 221);
+            z-index: 0;
+        }
+
+        #crown2 {
+            position: absolute;
+            bottom: 170px;
+            left: 1200px;
+            width: 50px;
+            height: 30px;
+            background-color: rgb(251, 255, 0);
+            z-index: 0;
+        }
+
+        #princesseye {
+            position: absolute;
+            bottom: 154px;
+            right: 133px;
+            width: 14px;
+            height: 10px;
+            background-color: rgb(0, 0, 0);
+            z-index: 1;
+        }
+
+        #crown {
+            position: absolute;
+            bottom: 190px;
+            left: 50px;
+            width: 50px;
+            height: 30px;
+            background-color: rgb(119, 119, 119);
+            transition: left 2s;
+            z-index: 2;
+        }
+
+        #knighteye {
+            position: absolute;
+            bottom: 160px;
+            left: 80px;
+            width: 10px;
+            height: 10px;
+            transition: left 2s;
+            background-color: rgb(0, 0, 0);
+            z-index: 2;
+
+        }
+
+
+
+        #enemyeye2 {
+            position: absolute;
+            bottom: 120px;
+            left: 706px;
+            width: 12px;
+            /* Ancho 0 */
+            height: 0;
+            /* Alto 0 */
+            border-left: 10px solid transparent;
+            /* Parte izquierda del triángulo */
+            border-right: 10px solid transparent;
+            /* Parte derecha del triángulo */
+            border-top: 20px solid rgb(0, 0, 0);
+            /* Parte superior (color del triángulo) */
+            z-index: 1;
+        }
+
+        #enemyeye3 {
+            position: absolute;
+            bottom: 140px;
+            left: 906px;
+            width: 14px;
+            /* Ancho 0 */
+            height: 0;
+            /* Alto 0 */
+            border-left: 10px solid transparent;
+            /* Parte izquierda del triángulo */
+            border-right: 10px solid transparent;
+            /* Parte derecha del triángulo */
+            border-top: 20px solid rgb(0, 0, 0);
+            /* Parte superior (color del triángulo) */
+            z-index: 1;
+        }
+
+        #enemy2 {
+            position: absolute;
+            bottom: 50px;
+            left: 700px;
+            width: 130px;
+            height: 130px;
+            background-color: yellow;
+            z-index: 0;
+        }
+
+        #enemy3 {
+            position: absolute;
+            bottom: 50px;
+            left: 900px;
+            width: 150px;
+            height: 150px;
+            background-color: blue;
+            z-index: 0;
+        }
+
+        #grass {
+            position: absolute;
+            bottom: 0;
+            width: 1000%;
+            height: 50px;
+            background-color: green;
+            z-index: 1;
+        }
+
+        .cloud {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        #sun {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 80px;
+            height: 80px;
+            background-color: yellow;
+            border-radius: 50%;
+            z-index: 3;
+            transition: left 3s;
+        }
+
+        #moon {
+            position: absolute;
+            top: 50px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 50px;
+            width: 0;
+            height: 0;
+            border-left: 300px solid transparent;
+            border-right: 300px solid transparent;
+            border-bottom: 120px solid darkgreen;
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+
+
+
+        .container {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #timer {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .options {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        #enemy {
+            position: absolute;
+            bottom: 50px;
+            left: 500px;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            z-index: 1;
+        }
+
+        #enemyeye {
+            position: absolute;
+            bottom: 97px;
+            left: 504px;
+            width: 10px;
+            /* Ancho 0 */
+            height: 10px;
+            /* Alto 0 */
+            border-left: 10px solid transparent;
+            /* Parte izquierda del triángulo */
+            border-right: 10px solid transparent;
+            /* Parte derecha del triángulo */
+            border-top: 20px solid rgb(0, 0, 0);
+            /* Parte superior (color del triángulo) */
+            z-index: 1;
+        }
+
+        .option {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #0056b3;
+        }
+
+        .option.incorrect {
+            background-color: red;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            font-family: 'Roboto', sans-serif;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Estilos para el modal */
+        .modal {
+
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 900px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 20px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="enemy"></div>
+    <div id="enemyeye"></div>
+    <div id="sun"></div>
+    <div id="princesseye"></div>
+    <div id="crown2"></div>
+    <div id="moon"></div>
+    <div id="knight"></div>
+    <div id="knighteye"></div>
+    <div id="princess"></div>
+    <div id="crown"></div>
+    <div id="enemyeye2"></div>
+    <div id="enemyeye3"></div>
+    <div id="enemy2"></div>
+    <div id="enemy3"></div>
+    <div id="grass"></div>
+
+    <!-- Montañas -->
+    <div class="mountain" style="left: 100px;"></div>
+    <div class="mountain" style="left: 400px;"></div>
+    <div class="mountain" style="left: 600px;"></div>
+    <div class="mountain" style="left: 800px;"></div>
+    <div class="mountain" style="left: 1000px;"></div>
+    <div class="mountain" style="left: 1200px;"></div>
+    <div class="mountain" style="left: 1400px;"></div>
+    <div class="mountain" style="left: 1600px;"></div>
+    <div class="mountain" style="left: 1800px;"></div>
+    <div class="mountain" style="left: 2000px;"></div>
+    <div class="mountain" style="left: 2200px;"></div>
+    <div class="mountain" style="left: 2400px;"></div>
+    <div class="mountain" style="left: 2600px;"></div>
+    <div class="mountain" style="left: 2800px;"></div>
+    <div class="mountain" style="left: 3000px;"></div>
+    <div class="mountain" style="left: 3200px;"></div>
+    <div class="mountain" style="left: 3400px;"></div>
+    <div class="mountain" style="left: 3600px;"></div>
+    <div class="mountain" style="left: 3800px;"></div>
+    <div class="mountain" style="left: 4000px;"></div>
+    <div class="mountain" style="left: 4200px;"></div>
+    <div class="mountain" style="left: 4400px;"></div>
+    <div class="mountain" style="left: 4600px;"></div>
+    <div class="mountain" style="left: 4800px;"></div>
+    <div class="mountain" style="left: 5000px;"></div>
+
+    <div class="container">
+        <h1 id="question">¿Cuál es la capital de Francia?</h1>
+        <div id="timer">6</div>
+        <div class="options">
+            <div class="option" data-correct="false">Berlín</div>
+            <div class="option" data-correct="false">Madrid</div>
+            <div class="option" data-correct="true">París</div>
+            <div class="option" data-correct="false">Lisboa</div>
+            <div class="option" data-correct="false">Roma</div>
+        </div>
+        <button id="restartBtn" class="hidden">Try again</button>
+        <button id="congratsBtn" class="hidden">Next level</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Congrats</h2>
+            <h3>Here you got some rules to level II</h3>
+            <p>Comparatives of inferiority are used to compare two items, indicating that one has a quality to a lesser
+                degree than the other.</p>
+
+            <p>For countable items <mark>"fewer"</mark></p>
+            <p>fewer books→ <u>menos libros</u></p>
+            <p>For non-countable items <mark>"less"</mark> </p>
+            <p>less love → <u>menos amor</u></p>
+            <h3>Example:</h3>
+            <p>"I have fewer clothes than John".</p>
+            <a id="continueBtn" href="nivel2.html">LEVEL II</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('ready-button').onclick = function () {
+            const options = document.querySelectorAll('.options');
+            let selectedValues = Array.from(options).map(select => select.value).join(', ');
+            alert('¡Listo! Has seleccionado tus respuestas: ' + selectedValues);
+        };
+    </script>
+
+    <script>
+        function createClouds() {
+            const cloudCount = 20;
+            for (let i = 0; i < cloudCount; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.width = `${Math.random() * 100 + 50}px`;
+                cloud.style.height = `${Math.random() * 60 + 30}px`;
+                cloud.style.top = `${Math.random() * 100}px`;
+                cloud.style.left = `${Math.random() * window.innerWidth}px`;
+                document.body.appendChild(cloud);
+                animateCloud(cloud);
+            }
+        }
+
+        function animateCloud(cloud) {
+            let position = parseInt(cloud.style.left);
+            const moveCloud = () => {
+                position += 0.5;
+                cloud.style.left = `${position}px`;
+                if (position > window.innerWidth) {
+                    position = -100;
+                }
+                requestAnimationFrame(moveCloud);
+            };
+            moveCloud();
+        }
+
+        function animateSun() {
+            let sun = document.getElementById('sun');
+            let moon = document.getElementById('moon');
+            let position = 30;
+            const moveSun = () => {
+                position += 0.5;
+                sun.style.left = `${position}px`;
+                if (position > window.innerWidth) {
+                    position = -80;
+                    document.body.style.backgroundColor = "darkblue";
+                    moon.style.opacity = '1';
+                }
+                requestAnimationFrame(moveSun);
+            };
+            moveSun();
+        }
+
+        createClouds();
+        animateSun();
+
+        const colors = ["lightblue", "lightcyan", "lightpink", "lightorange", "lightred"];
+        let currentColorIndex = 0;
+
+        setInterval(() => {
+            currentColorIndex = (currentColorIndex + 2) % colors.length;
+            document.body.style.backgroundColor = colors[currentColorIndex];
+        }, 10000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const questions = [
+            {
+                question: "My brother is _____ than me, but my dad is _____ han him",
+                options: ["taller", "tallest", "more tall", "longer", "tall"],
+                correct: 0
+            },
+            {
+                question: "Is my friend ______ expert than me?",
+                options: ["Most", "More", "Even", "almost", "so"],
+                correct: 1
+            },
+            {
+                question: "She can't run ______ than me",
+                options: ["Slow", "Speed", "More", "Faster", "better"],
+                correct: 3
+            },
+            {
+                question: "The teacher is _____ patient and _____ smart than us",
+                options: ["Patientest", "More", "Most", "Even", "Not"],
+                correct: 1
+            },
+            {
+                question: "He is ______ than me, because he has more money",
+                options: ["Bigger", "Taller", "More", "Richer", "Rich"],
+                correct: 3
+            }
+            ,
+            {
+                question: "Laura's hair is ______ than my friend Laura, because she is a woman ",
+                options: ["stronger", "Longer", "More", "sweeter", "poorer"],
+                correct: 1
+            }
+            ,
+            {
+                question:  "I am ______ responsible than my friend because I did the homework",
+                options: ["Bigger", "Taller", "More", "Richer", "Rich"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        const restartBtn = document.getElementById('restartBtn');
+        const congratsBtn = document.getElementById('congratsBtn');
+        const modal = document.getElementById('myModal');
+        const closeModal = document.querySelector('.close');
+
+        function loadQuestion() {
+            clearInterval(timer);
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById('question').innerText = currentQuestion.question;
+            const options = document.querySelectorAll('.option');
+
+            options.forEach((option, index) => {
+                option.innerText = currentQuestion.options[index];
+                option.setAttribute('data-correct', index === currentQuestion.correct);
+                option.classList.remove('incorrect'); // Reset background color
+            });
+
+            startTimer();
+            restartBtn.classList.add('hidden'); // Hide restart button
+            congratsBtn.classList.add('hidden'); // Hide congrats button
+        }
+
+        function startTimer() {
+            let timeLeft = 8;
+            document.getElementById('timer').innerText = timeLeft;
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('Time is over');
+                    restartBtn.classList.remove('hidden'); // Show restart button
+                }
+            }, 600);
+        }
+
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const isCorrect = e.target.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    alert(`You have completed the quiz. your score: ${score}/${questions.length}`);
+                    restartBtn.classList.remove('hidden'); // Show restart button
+                    if (score === questions.length) {
+                        congratsBtn.classList.remove('hidden'); // Show congrats button
+                    }
+                }
+            });
+        });
+
+        // Abrir modal
+        congratsBtn.addEventListener('click', () => {
+            modal.style.display = "block";
+        });
+
+        // Cerrar modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+
+        // Continuar al siguiente nivel
+        document.getElementById('continueBtn').addEventListener('click', () => {
+            modal.style.display = "none";
+            // Aquí puedes implementar la lógica para cargar el siguiente nivel
+            alert('Going to next level...');
+        });
+
+        // Reiniciar el quiz
+        restartBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            restartBtn.classList.add('hidden');
+            congratsBtn.classList.add('hidden'); // Hide congrats button
+            loadQuestion(); // Load first level questions
+        });
+
+        // Load the first question
+        loadQuestion();
+    </script>
+</body>
+
+</html>
